@@ -1,6 +1,7 @@
 package com.example.camapp
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.Image
 import android.net.Uri
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var cameraExecutor: ExecutorService
     var camera:Camera?=null
     private var cameraSelector =CameraSelector.DEFAULT_BACK_CAMERA
+    private lateinit var imageAdapter: ImageAdapter
+
+    private val capturedImageUris:MutableList<Uri> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +46,20 @@ class MainActivity : AppCompatActivity() {
         }else{
             ActivityCompat.requestPermissions(this, REQ_PERMS, REQ_CODE_PERMS)
         }
-
+        //click image
         viewBinding.captureBtn.setOnClickListener{ takePhoto()}
+        //image list
+        viewBinding.listBtn.setOnClickListener { openList() }
 
         cameraExecutor =Executors.newSingleThreadExecutor()
 
     }
+
+    private fun openList(){
+        val openListView = Intent(this, ImageListActivity::class.java)
+        startActivity(openListView)
+    }
+
 
     private fun permsgranted(): Boolean{
         for (permission in REQ_PERMS){
@@ -69,6 +82,7 @@ class MainActivity : AppCompatActivity() {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
 
                 val savedUri = Uri.fromFile(photoFile)
+                capturedImageUris.add(savedUri)
                 Toast.makeText(applicationContext,"Image Saved Successfully ${savedUri}", Toast.LENGTH_LONG).show()
             }
 
@@ -104,9 +118,6 @@ class MainActivity : AppCompatActivity() {
             }catch (e:Exception){
                 Log.d("CamApp","StartCamera Failed", e)
             }
-
-
-
 
 
         },ContextCompat.getMainExecutor(this))

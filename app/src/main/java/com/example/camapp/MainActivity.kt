@@ -27,10 +27,12 @@ class MainActivity : AppCompatActivity() {
     private var cameraSelector =CameraSelector.DEFAULT_BACK_CAMERA
     private lateinit var imageAdapter: ImageAdapter
     private val capturedImageUris:MutableList<Uri> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding =ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
         //perms
         if (permsgranted()){
             startCamera()
@@ -76,10 +78,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext,"Image Saved Successfully ${savedUri}", Toast.LENGTH_LONG).show()
 
 
-                val openListView = Intent(this@MainActivity, ImageListActivity::class.java)
+                /*val openListView = Intent(this@MainActivity, ImageListActivity::class.java)
                 openListView.putParcelableArrayListExtra("imageUris", ArrayList(capturedImageUris))
                 startActivity(openListView)
-
+                */
             }
 
             override fun onError(Exception: ImageCaptureException){

@@ -28,6 +28,7 @@
         >
         <TextView
             android:id="@+id/imglat"
+            android:text=" Latitude: "
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/imgLong"
@@ -35,6 +36,7 @@
         />
         <TextView
             android:id="@+id/imglong"
+            android:text=" Longitude: "
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/imgLat"
